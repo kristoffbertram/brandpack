@@ -176,7 +176,7 @@ body {
 	background-color: #fff;
 	margin: 0;
 	font-family: <?php echo $config['font_body']; ?>;
-	color: <?php echo $config['text_rgb']; ?>;
+	color: rgb(<?php echo $config['text_rgb']; ?>);
 	font-size: 1rem;
 	overflow-x: hidden;
 }
