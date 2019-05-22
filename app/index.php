@@ -304,7 +304,7 @@ header .crumb ul li:first-child:before {
 
 main {
 	padding-top: 8rem;
-	height: calc(100vh - 4rem);
+	min-height: calc(100vh - 4rem);
 }
 
 main .empty {
