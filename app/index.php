@@ -28,6 +28,17 @@ function thumb($p = array()) {
 
 			exit ($image);
 
+		} else {
+
+			list($width, $height, $type, $attr) = getimagesize(UPLOAD.$thumb);
+			if ($width < 601) {
+
+				header("Content-Type: ".$attr);
+				echo file_get_contents(UPLOAD.$thumb);
+				exit;
+
+			}
+
 		}
 
 	}
@@ -293,11 +304,12 @@ header .crumb ul li:first-child:before {
 
 main {
 	padding-top: 8rem;
+	height: calc(100vh - 4rem);
 }
 
 main .empty {
 	display: flex;
-	height: calc(100vh - 8rem);
+	height: 100%;
 	align-items: center;
 	justify-content: center;
 	text-align: center;
@@ -510,6 +522,13 @@ main div.links ul li {
 }
 
 main div.links ul li > a {
+}
+
+footer {
+	color: #fff;
+	padding: 2rem;
+	font-size: .75rem;
+	background-color:  rgb(<?php echo $config['secondary_rgb']; ?>);
 }
 
 .count {
@@ -852,6 +871,7 @@ endif;
 </main>
 
 <footer>
+BrandPack is designed and developed by <a href="https://kristoffbertram.be/brandpack">Kristoff Bertram</a>.
 </footer>
 
 </body>
