@@ -49,11 +49,43 @@ if ($thumb = $_GET['thumb']) {
 	thumb(array("thumb" => $thumb)); exit;
 }
 
+if ($download = $_GET['download']) {
+	
+	$file = urldecode($download);
+
+	if(file_exists(DR.$download)) {
+		
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="'.basename(DR.$download).'"');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize(DR.$download));
+		flush();
+		readfile(DR.$download);
+		exit;
+	}
+
+}
+
 if (file_exists(DR."/config.ini")):
 
 	$config			= parse_ini_file(DR."/config.ini");
 	
 endif;
+
+if (!(isset($config))): $config = array(); endif;
+if (empty($config['file'])): $config['file'] = "index.php"; endif;
+if (empty($config['name'])): $config['name'] = "A BrandPack For You"; endif;
+if (empty($config['font_stylesheet'])): $config['font_stylesheet'] = "https://fonts.googleapis.com/css?family=Kodchasan:400,700"; endif;
+if (empty($config['font_body'])): $config['font_body'] = "'Kodchasan', sans-serif"; endif;
+if (empty($config['number_of_columns'])): $config['number_of_columns'] = "5"; endif;
+if (empty($config['border_radius'])): $config['border_radius'] = "1rem"; endif;
+if (empty($config['text_rgb'])): $config['text_rgb'] = "68,68,68"; endif;
+if (empty($config['text_hover_rgb'])): $config['text_hover_rgb'] = "255,255,255"; endif;
+if (empty($config['secondary_rgb'])): $config['secondary_rgb'] = "170,170,170"; endif;
+if (empty($config['tertiary_rgb'])): $config['tertiary_rgb'] = "238,238,238"; endif;
 
 function eCount($dir) {
 
@@ -822,7 +854,7 @@ if ($files):
 				<div class="download">
 
 					<ul>
-					<li><a href=".<?php echo $f['filepath']; ?>" target="_blank"><?php echo $f['filename']; ?> <small><?php echo $f['extension']; ?></small></a></li>
+					<li><a href="<?php echo $config['file']; ?>?download=<?php echo $f['filepath']; ?>" target="_blank"><?php echo $f['filename']; ?> <small><?php echo $f['extension']; ?></small></a></li>
 					</ul>
 
 				</div>
